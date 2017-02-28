@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+var counts=0;
+var ccount=0;
+	function checkcount () {
+		if(this instanceof checkcount){
+			
+			counts++;
+			console.log("new is invoked "+ counts+" times");
+		}
+		else{
+			ccount++;
+			console.log("function normally invoked "+ ccount+" times");
+		}
+
+	}
+	var a,b,c,d,e;
+	a= new checkcount();
+	b=new checkcount();
+	c=new checkcount();
+	d=checkcount();
+	e=checkcount();
+</script>
+</body>
+</html>

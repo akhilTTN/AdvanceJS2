@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>stopwatch</title>
+</head>
+<body>
+<center><strong>Clock</strong></center>
+<div style="align-content: center;">
+	<table>
+		<tr>
+			<td id="h"></td>
+			<td id="m"></td>
+			<td id="s"></td>
+			<td id="ap"></td>
+		</tr>
+	</table>
+	<button onclick="starts()">start</button>
+	<button onclick="stop()">stop</button>
+</div>
+<center><strong>StopWatch</strong></center>
+<div>
+	<table>
+		<tr>
+			<td id="hh"></td>
+			<td id="mm"></td>
+			<td id="ss"></td>
+		</tr>
+	</table>
+	<button id="abc" onclick="startwatch()">start</button>
+	<button onclick="pause()">pause</button>
+	<button onclick="split_lap()">split lap</button>
+	<button onclick="reset()">reset</button><br>
+</div>
+
+<table id="tabe">
+		<tr><td>LAPS</td></tr>
+	</table>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+var hrs;
+var min;
+var sec;
+var t;
+function disp () 
+{
+	document.getElementById("h").innerHTML=hrs+": " ;
+	document.getElementById("m").innerHTML=min+": ";
+	document.getElementById("s").innerHTML=sec;
+	if(hrs<12)
+		document.getElementById("ap").innerHTML="AM";
+	else
+		document.getElementById("ap").innerHTML="PM";
+}
+function startclock () {
+	hrs=new Date().getHours();
+	min=new Date().getMinutes();
+	sec=new Date().getSeconds();
+	disp();
+}
+function starts () {
+t=setTimeout(function(){
+		startclock();
+		starts();
+	},1000);
+}
+function stop () {
+	clearTimeout(t);
+}
+
+//---------------------------------------------------------------------------------------
+
+var sw;
+	var start=0;
+	var hr=0;
+	var mins=0;
+	var secs=0;
+function startwatch () {
+	$("#abc").attr("disabled", true);
+	sw=setInterval(function () {
+		secs+=1;
+		if(secs==60){
+			mins+=1;
+			secs=0;
+		}
+		if(mins==60){
+			hrs+=1;
+			mins=0;
+		}
+		if(secs<10){
+			//secs="0"+secs;
+			document.getElementById("ss").innerHTML="0"+secs;
+		}
+		else{
+			document.getElementById("ss").innerHTML=secs;
+		}
+		if(mins<10){
+			//mins="0"+mins;
+			document.getElementById("mm").innerHTML="0"+mins+" : ";
+		}
+		else
+		{
+			document.getElementById("mm").innerHTML=mins+" : ";
+		}
+		if(hr<10){
+			//hr="0"+hr;
+			document.getElementById("hh").innerHTML="0"+hr+" : ";
+		}
+		else{
+			document.getElementById("hh").innerHTML=hr+" : ";
+		}
+	}, 1000);
+	
+}
+function pause () {
+	clearInterval(sw);
+	$("#abc").attr('disabled', false);
+}
+
+var coucou=1;
+
+function split_lap ()
+ {
+ 	var spsec,spmin,sphr;
+	if(secs<10)
+	{
+		spsec="0"+secs;
+	}
+	if(mins<10)
+	{
+		spmin="0"+mins;
+	}
+	if(hr<10){
+		sphr="0"+hr;
+	}
+	var aps="<tr><td> LAP "+coucou++ +" : " + sphr + " : " + spmin + " : " + spsec + "</td></tr>";
+	console.log(aps);
+	$("#tabe").append(aps);
+}
+
+function reset () {
+	pause();
+	hr=mins=secs=0;
+	document.getElementById("hh").innerHTML="0"+hr+" : ";
+	document.getElementById("mm").innerHTML="0"+mins+" : ";
+	document.getElementById("ss").innerHTML="0"+secs;
+}
+</script>
+</body>
+</html>

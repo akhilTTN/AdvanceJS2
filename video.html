@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body onload="mainss()">
+
+<video id="v1" width="640px" controls>
+	<source src="http://dl2.herodls.me/siteuploads//files/sfd83/41185/Try%20Everything%20(Shakira)%20720p%20PC%20HD-(HeroMaza.In).mp4" type="video/mp4">
+</video><br>
+<div>
+<button onclick="play_pause()">play/pause</button>
+<button onclick="currtime()">current time</button>
+<button onclick="spdups()">speed rate</button><span id="sp">x1</span>
+<div id="aa">
+	<table>
+		<tr>
+			<td>Total time</td>
+			<td> : </td>
+			<td id="tt">0 seconds</td>
+		</tr>
+		<tr>
+			<td>Time passed</td>
+			<td> : </td>
+			<td id="tp">0 seconds</td>
+		</tr>
+		<tr>
+			<td>Time left</td>
+			<td> : </td>
+			<td id="tl"></td>
+		</tr>
+	</table>
+</div>
+</div>
+<script type="text/javascript">
+var vids=document.getElementById("v1");
+function play_pause () {
+	if(vids.paused)
+		vids.play();
+	else
+		vids.pause();
+}
+function currtime () {
+	var abc=Math.floor(vids.currentTime);
+	alert(abc);
+	document.getElementById("aa").innerHTML=abc;
+}
+var total_duration;
+
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    return hDisplay + mDisplay + sDisplay; 
+}
+
+var timess;
+
+function mainss () {
+	
+	tpd();
+	tlf();
+	setTimeout(function(){
+		du();
+	},2000);
+}
+function du () {
+	total_duration=secondsToHms(v1.duration);
+	document.getElementById("tt").innerHTML=total_duration;
+	console.log(total_duration);
+}
+var current_time;
+
+function tpd () {
+	setTimeout(function () {
+		//alert("one one "+v1.currentTime);
+		current_time=secondsToHms(v1.currentTime);
+		//alert("two two "+current_time);
+		document.getElementById("tp").innerHTML=current_time;
+		tpd();
+	}, 1000);
+}
+
+var time_left;
+function tlf () {
+	setTimeout(function () {
+		//alert("one one "+v1.currentTime);
+		time_left=secondsToHms(v1.duration-v1.currentTime);
+		//alert("two two "+current_time);
+		document.getElementById("tl").innerHTML=time_left;
+		tlf();
+	}, 1000);
+
+}
+var ctr=1;
+
+function spdups () {
+	ctr++;
+	v1.playbackRate=ctr;
+	document.getElementById("sp").innerHTML=ctr;
+}
+</script>
+</body>
+</html>
